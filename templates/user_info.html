@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="flash-message">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <h1>User Profile: {{ user.username }}</h1>
+    <p>Email: {{ user.email }}</p>
+    <p>First Name: {{ user.first_name }}</p>
+    <p>Last Name: {{ user.last_name }}</p>
+
+    {% for feedback in feedbacks %}
+        <div class="feedback">
+            <h3>{{ feedback.title }}</h3>
+            <p>{{ feedback.content }}</p>
+            <a href="/feedback/{{ feedback_id }}/update">Edit</a>
+            <form action="/feedback/{{ feedback.id }}/delete" method="POST">
+                {{ form.hidden_tag() }}
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    {% endfor %}
+
+    <a href="/users/{{ user.username }}/feedback/add">Add Feedback</a>
+
+    <form action="/users/{{ user.username }}/delete" method="POST">
+        {{ form.hidden_tag() }}
+        <button type="submit">Delete Account</button>
+    </form>
+{% endblock %}

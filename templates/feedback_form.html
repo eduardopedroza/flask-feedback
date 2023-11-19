@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="flash-message">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form id="feedback-form" method="POST">
+        {{ form.hidden_tag() }}
+
+        {% for field in form 
+            if field.widget.input_type != 'hidden' %}
+
+            <p>
+                {{ field.label }}
+                {{ field }}
+            </p>
+        {% endfor %}
+        <button type="submit">Update Feedback</button>
+    </form>
+{% endblock %}
